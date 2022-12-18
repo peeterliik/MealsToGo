@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Searchbar } from "react-native-paper";
+import { FlatList } from "react-native";
+
 import styled from "styled-components/native";
 import { RestaurantInfo } from "../components/restaurant-info.component";
 
@@ -8,14 +10,14 @@ const DroidSafeArea = styled.SafeAreaView`
 `;
 
 const SearchArea = styled.View`
-  padding: 16px;
-  background-color: #cbc9c9;
+  padding: ${(props) => props.theme.space[3]};
+  background-color: ${(props) => props.theme.colors.bg.secondary};
 `;
 
 const RestaurantInfoArea = styled.View`
   flex: 1;
-  padding: 16px;
-  background-color: white;
+  padding: ${(props) => props.theme.space[3]};
+  background-color: ${(props) => props.theme.colors.bg.primary};
 `;
 
 export const RestaurantsScreen = () => {
@@ -32,9 +34,26 @@ export const RestaurantsScreen = () => {
             value={searchQuery}
           />
         </SearchArea>
-        <RestaurantInfoArea>
-          <RestaurantInfo />
-        </RestaurantInfoArea>
+        <FlatList
+          data={[
+            { name: 1 },
+            { name: 2 },
+            { name: 3 },
+            { name: 4 },
+            { name: 5 },
+            { name: 6 },
+            { name: 7 },
+            { name: 8 },
+            { name: 9 },
+            { name: 10 },
+          ]}
+          renderItem={() => (
+            <RestaurantInfoArea>
+              <RestaurantInfo />
+            </RestaurantInfoArea>
+          )}
+          keyExtractor={(item) => item.name}
+        />
       </DroidSafeArea>
     </>
   );
