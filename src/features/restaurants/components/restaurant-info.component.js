@@ -35,8 +35,8 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
       <Info>
         <Text variant="label">{name}</Text>
         <Rating>
-          {ratingArray.map(() => (
-            <SvgXml xml={star} width={20} height={20} />
+          {ratingArray.map((rating) => (
+            <SvgXml key={rating} xml={star} width={20} height={20} />
           ))}
           <SectionEnd>
             {isClosedTemp && <Text variant="error">CLOSED TEMPORARILY</Text>}
