@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, ActivityIndicator } from "react-native-paper";
 import { FlatList } from "react-native";
+import { colors } from "../../../infra/theme/colors";
 
 import styled from "styled-components/native";
 import { RestaurantInfo } from "../components/restaurant-info.component";
@@ -22,6 +23,10 @@ const RestaurantInfoArea = styled.View`
   background-color: ${(props) => props.theme.colors.bg.primary};
 `;
 
+const LoadingScreen = styled.ActivityIndicator`
+  flex: 1;
+`;
+
 export const RestaurantsScreen = () => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,17 +42,21 @@ export const RestaurantsScreen = () => {
             value={searchQuery}
           />
         </SearchArea>
-        <FlatList
-          data={restaurants}
-          renderItem={({ item }) => {
-            return (
-              <RestaurantInfoArea>
-                <RestaurantInfo restaurant={item} />
-              </RestaurantInfoArea>
-            );
-          }}
-          keyExtractor={(item) => item.name}
-        />
+        {isLoading ? (
+          <LoadingScreen animating={true} color={colors.ui.error} size={50} />
+        ) : (
+          <FlatList
+            data={restaurants}
+            renderItem={({ item }) => {
+              return (
+                <RestaurantInfoArea>
+                  <RestaurantInfo restaurant={item} />
+                </RestaurantInfoArea>
+              );
+            }}
+            keyExtractor={(item) => item.name}
+          />
+        )}
       </DroidSafeArea>
     </>
   );
