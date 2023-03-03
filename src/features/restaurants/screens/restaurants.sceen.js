@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Searchbar, ActivityIndicator } from "react-native-paper";
-import { FlatList } from "react-native";
+import { Search } from "../components/search.component";
+
+import { FlatList, TouchableOpacity } from "react-native";
 import { colors } from "../../../infra/theme/colors";
 
 import styled from "styled-components/native";
@@ -27,21 +28,13 @@ const LoadingScreen = styled.ActivityIndicator`
   flex: 1;
 `;
 
-export const RestaurantsScreen = () => {
+export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
-  const [searchQuery, setSearchQuery] = useState("");
-  const onChangeSearch = (query) => setSearchQuery(query);
 
   return (
     <>
       <DroidSafeArea>
-        <SearchArea>
-          <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
-        </SearchArea>
+        <Search />
         {isLoading ? (
           <LoadingScreen animating={true} color={colors.ui.error} size={50} />
         ) : (
@@ -49,9 +42,17 @@ export const RestaurantsScreen = () => {
             data={restaurants}
             renderItem={({ item }) => {
               return (
-                <RestaurantInfoArea>
-                  <RestaurantInfo restaurant={item} />
-                </RestaurantInfoArea>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("RestaurantDetail", {
+                      restaurant: item,
+                    })
+                  }
+                >
+                  <RestaurantInfoArea>
+                    <RestaurantInfo restaurant={item} />
+                  </RestaurantInfoArea>
+                </TouchableOpacity>
               );
             }}
             keyExtractor={(item) => item.name}
