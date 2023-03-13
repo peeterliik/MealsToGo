@@ -8,7 +8,6 @@ import styled from "styled-components/native";
 import { RestaurantInfo } from "../components/restaurant-info.component";
 
 import { RestaurantsContext } from "../../../services/restaurants/mock/restaurants.context";
-
 const DroidSafeArea = styled.SafeAreaView`
   flex: 1;
 `;
