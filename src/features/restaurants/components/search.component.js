@@ -8,7 +8,7 @@ const SearchArea = styled.View`
   background-color: ${(props) => props.theme.colors.bg.secondary};
 `;
 
-export const Search = () => {
+export const Search = ({ isFavoritesToggled, onFavoritesToggle }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
 
   const { keyword, search } = useContext(LocationContext);
@@ -21,6 +21,8 @@ export const Search = () => {
   return (
     <SearchArea>
       <Searchbar
+        icon={isFavoritesToggled ? "heart" : "heart-outline"}
+        onIconPress={onFavoritesToggle}
         placeholder="Search for a location"
         onChangeText={onChangeSearch}
         value={searchQuery}

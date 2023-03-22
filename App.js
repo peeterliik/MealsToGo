@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
@@ -13,9 +13,12 @@ import {
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 
 import { theme } from "./src/infra/theme";
-import { AppNavigator } from "./src/infra/navigation/app.navigator";
+import { Navigation } from "./src/infra/navigation";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   let [oswaldLoaded] = useOswald({
     Oswald_400Regular,
   });
@@ -30,13 +33,15 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavoritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <AppNavigator />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavoritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavoritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavoritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
     </>

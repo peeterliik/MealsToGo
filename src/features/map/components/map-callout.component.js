@@ -3,6 +3,6 @@ import { CompactRestaurant } from "../../../components/restuaurants/compact-rest
 
 export const MapCallout = ({ restaurant }) => (
   <>
-    <CompactRestaurant restaurant={restaurant}></CompactRestaurant>
+    <CompactRestaurant isMap restaurant={restaurant}></CompactRestaurant>
   </>
 );

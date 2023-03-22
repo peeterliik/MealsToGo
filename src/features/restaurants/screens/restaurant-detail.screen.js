@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { RestaurantInfo } from "../components/restaurant-info.component";
 import { List } from "react-native-paper";
 import { ScrollView } from "react-native";
-import { Screen } from "react-native-screens";
 
 const DroidSafeArea = styled.SafeAreaView`
   flex: 1;

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Search } from "../components/search.component";
+import { FavoritesContext } from "../../../services/favorites/favorites.context";
 
 import { FlatList, TouchableOpacity } from "react-native";
 import { colors } from "../../../infra/theme/colors";
@@ -8,6 +9,8 @@ import styled from "styled-components/native";
 import { RestaurantInfo } from "../components/restaurant-info.component";
 
 import { RestaurantsContext } from "../../../services/restaurants/mock/restaurants.context";
+import { FavoritesBar } from "../../../components/favorites/favorites-bar.component";
+
 const DroidSafeArea = styled.SafeAreaView`
   flex: 1;
 `;
@@ -29,11 +32,22 @@ const LoadingScreen = styled.ActivityIndicator`
 
 export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
+  const { favorites } = useContext(FavoritesContext);
+  const [isToggled, setIsToggled] = useState(false);
 
   return (
     <>
       <DroidSafeArea>
-        <Search />
+        <Search
+          isFavoritesToggled={isToggled}
+          onFavoritesToggle={() => setIsToggled(!isToggled)}
+        />
+        {isToggled && (
+          <FavoritesBar
+            favorites={favorites}
+            onNavigate={navigation.navigate}
+          />
+        )}
         {isLoading ? (
           <LoadingScreen animating={true} color={colors.ui.error} size={50} />
         ) : (
